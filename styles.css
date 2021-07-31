@@ -1,0 +1,12 @@
+.heading {
+  position: relative;
+  top: 3rem;
+}
+.card {
+  position: relative;
+  top: 10rem;
+}
+
+.background {
+  background-color: pink;
+}
