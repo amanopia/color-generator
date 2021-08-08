@@ -8,6 +8,10 @@ const div4 = document.querySelector(".div-4");
 const div5 = document.querySelector(".div-5");
 const div6 = document.querySelector(".div-6");
 const values = document.querySelectorAll(".values--container");
+const valuesSaturation = document.querySelectorAll(
+  ".values-saturation-container"
+);
+const valuesLumosity = document.querySelectorAll(".values-lumosity-container");
 // FOR DISPLAYING HEX CODES
 const names = document.querySelectorAll(".values");
 const namesSaturation = document.querySelectorAll(".values-saturation");
@@ -236,6 +240,20 @@ div1.addEventListener("click", function () {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
+  }
+
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
   }
 });
 
