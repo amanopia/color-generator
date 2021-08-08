@@ -10,6 +10,8 @@ const div6 = document.querySelector(".div-6");
 const values = document.querySelectorAll(".values--container");
 // FOR DISPLAYING HEX CODES
 const names = document.querySelectorAll(".values");
+const namesSaturation = document.querySelectorAll(".values-saturation");
+const namesLumosity = document.querySelectorAll(".values-lumosity");
 
 // COLOUR GENERATE FUNCTION
 generate_button.addEventListener("click", function () {
@@ -224,7 +226,7 @@ div1.addEventListener("click", function () {
   var saturation = saturationCalc(codedColor[1]);
   var hue = hueCalc(codedColor[1]);
 
-  console.log(names[1].textContent);
+  console.log(names[0].textContent);
   console.log(HSLToHex(hue, saturation, lumosity));
   console.log(saturation);
   console.log(lumosity);
@@ -239,17 +241,112 @@ div1.addEventListener("click", function () {
 
 div2.addEventListener("click", function () {
   div2.classList.toggle("motion");
+
+  // HEX TO HSL
+  var hexCodedColor = innerImages[1].textContent;
+  var codedColor = hexCodedColor.split("#"); // splits the hex code into an array separated by a '#' so that the number can be passed into the hexToHSL function.
+  var lumosity = lumosityCalc(codedColor[1]);
+  var saturation = saturationCalc(codedColor[1]);
+  var hue = hueCalc(codedColor[1]);
+
+  console.log(names[1].textContent);
+  console.log(HSLToHex(hue, saturation, lumosity));
+  console.log(saturation);
+  console.log(lumosity);
+  console.log(hue);
+
+  for (let i = 0, hue = 0; i < 15; i++) {
+    names[i].textContent = HSLToHex(hue, 100, lumosity);
+    values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    hue += 24;
+  }
 });
 div3.addEventListener("click", function () {
   div3.classList.toggle("motion");
+
+  // HEX TO HSL
+  var hexCodedColor = innerImages[2].textContent;
+  var codedColor = hexCodedColor.split("#"); // splits the hex code into an array separated by a '#' so that the number can be passed into the hexToHSL function.
+  var lumosity = lumosityCalc(codedColor[1]);
+  var saturation = saturationCalc(codedColor[1]);
+  var hue = hueCalc(codedColor[1]);
+
+  console.log(names[2].textContent);
+  console.log(HSLToHex(hue, saturation, lumosity));
+  console.log(saturation);
+  console.log(lumosity);
+  console.log(hue);
+
+  for (let i = 0, hue = 0; i < 15; i++) {
+    names[i].textContent = HSLToHex(hue, 100, lumosity);
+    values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    hue += 24;
+  }
 });
 div4.addEventListener("click", function () {
   div4.classList.toggle("motion");
+
+  // HEX TO HSL
+  var hexCodedColor = innerImages[3].textContent;
+  var codedColor = hexCodedColor.split("#"); // splits the hex code into an array separated by a '#' so that the number can be passed into the hexToHSL function.
+  var lumosity = lumosityCalc(codedColor[1]);
+  var saturation = saturationCalc(codedColor[1]);
+  var hue = hueCalc(codedColor[1]);
+
+  console.log(names[3].textContent);
+  console.log(HSLToHex(hue, saturation, lumosity));
+  console.log(saturation);
+  console.log(lumosity);
+  console.log(hue);
+
+  for (let i = 0, hue = 0; i < 15; i++) {
+    names[i].textContent = HSLToHex(hue, 100, lumosity);
+    values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    hue += 24;
+  }
 });
 div5.addEventListener("click", function () {
   div5.classList.toggle("motion");
+
+  // HEX TO HSL
+  var hexCodedColor = innerImages[4].textContent;
+  var codedColor = hexCodedColor.split("#"); // splits the hex code into an array separated by a '#' so that the number can be passed into the hexToHSL function.
+  var lumosity = lumosityCalc(codedColor[1]);
+  var saturation = saturationCalc(codedColor[1]);
+  var hue = hueCalc(codedColor[1]);
+
+  console.log(names[4].textContent);
+  console.log(HSLToHex(hue, saturation, lumosity));
+  console.log(saturation);
+  console.log(lumosity);
+  console.log(hue);
+
+  for (let i = 0, hue = 0; i < 15; i++) {
+    names[i].textContent = HSLToHex(hue, 100, lumosity);
+    values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    hue += 24;
+  }
 });
 div6.addEventListener("click", function () {
   div6.classList.toggle("radius-change2");
   div6.classList.toggle("motion");
+
+  // HEX TO HSL
+  var hexCodedColor = innerImages[5].textContent;
+  var codedColor = hexCodedColor.split("#"); // splits the hex code into an array separated by a '#' so that the number can be passed into the hexToHSL function.
+  var lumosity = lumosityCalc(codedColor[1]);
+  var saturation = saturationCalc(codedColor[1]);
+  var hue = hueCalc(codedColor[1]);
+
+  console.log(names[5].textContent);
+  console.log(HSLToHex(hue, saturation, lumosity));
+  console.log(saturation);
+  console.log(lumosity);
+  console.log(hue);
+
+  for (let i = 0, hue = 0; i < 15; i++) {
+    names[i].textContent = HSLToHex(hue, 100, lumosity);
+    values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    hue += 24;
+  }
 });

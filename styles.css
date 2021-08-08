@@ -82,7 +82,13 @@ p {
   padding-left: 0;
 }
 
-.hue--heading {
+.hue {
+  margin-bottom: 40px;
+}
+.saturation {
+  margin-bottom: 40px;
+}
+.heading {
   position: relative;
   margin: 0 0 20px 0;
 
