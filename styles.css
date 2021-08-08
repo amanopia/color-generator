@@ -52,7 +52,10 @@ p {
   justify-content: flex-start;
   align-items: center;
 }
-
+.inner-images {
+  font-family: "Montserrat";
+  font-weight: 500;
+}
 .background {
   background-color: black;
 }
@@ -83,10 +86,10 @@ p {
 }
 
 .hue {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 .saturation {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 .heading {
   position: relative;

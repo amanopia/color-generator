@@ -20,7 +20,9 @@ const namesLumosity = document.querySelectorAll(".values-lumosity");
 // COLOUR GENERATE FUNCTION
 generate_button.addEventListener("click", function () {
   for (let i = 0; i < divArr.length; i++) {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    const randomColor = "000000".replace(/0/g, function () {
+      return (~~(Math.random() * 16)).toString(16);
+    });
     divArr[i].style.backgroundColor = `#${randomColor}`;
     divArr[i].firstElementChild.textContent = `#${randomColor}`;
   }
@@ -161,44 +163,61 @@ function saturationCalc(H) {
 }
 
 // HEX TO HSL: FOR HUE
-function hueCalc(H) {
-  // Convert hex to RGB first
-  let r = 0,
-    g = 0,
-    b = 0;
-  if (H.length >= 3) {
-    r = "0x" + H[1] + H[1];
-    g = "0x" + H[2] + H[2];
-    b = "0x" + H[3] + H[3];
+
+function hueCalc(hex) {
+  hex = hex.replace(/#/g, "");
+  if (hex.length === 3) {
+    hex = hex
+      .split("")
+      .map(function (hex) {
+        return hex + hex;
+      })
+      .join("");
   }
-  // Then to HSL
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  let cmin = Math.min(r, g, b),
-    cmax = Math.max(r, g, b),
-    delta = cmax - cmin,
-    h = 0,
-    s = 0,
-    l = 0;
+  var result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})[\da-z]{0,0}$/i.exec(hex);
+  if (!result) {
+    return null;
+  }
+  var r = parseInt(result[1], 16);
+  var g = parseInt(result[2], 16);
+  var b = parseInt(result[3], 16);
+  (r /= 255), (g /= 255), (b /= 255);
+  var max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
+  var h,
+    s,
+    l = (max + min) / 2;
+  if (max == min) {
+    h = s = 0;
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+  s = s * 100;
+  s = Math.round(s);
+  l = l * 100;
+  l = Math.round(l);
+  h = Math.round(360 * h);
 
-  if (delta == 0) h = 0;
-  else if (cmax == r) h = ((g - b) / delta) % 6;
-  else if (cmax == g) h = (b - r) / delta + 2;
-  else h = (r - g) / delta + 4;
-
-  h = Math.round(h * 60);
-
-  if (h < 0) h += 360;
-
-  l = (cmax + cmin) / 2;
-  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-  s = +(s * 100).toFixed(1);
-  l = +(l * 100).toFixed(1);
-
-  // return "hsl(" + h + "," + s + "%," + l + "%)";
-  // return `hsl(${h}, ${s}%, ${l}%)`;
   return h;
+
+  // return {
+  //   h: h,
+  //   s: s,
+  //   l: l,
+  // };
 }
 
 // COLOUR RETURN EFFECT
@@ -236,20 +255,21 @@ div1.addEventListener("click", function () {
   console.log(lumosity);
   console.log(hue);
 
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
   }
-
+  // SATURATION
   for (let i = 0, saturation = 100; i < 15; i++) {
     namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
     valuesSaturation[
       i
     ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
-    saturation -= 6.6666667;
+    saturation -= 6;
   }
-
+  // LUMOSITY
   for (let i = 0, lumosity = 100; i < 15; i++) {
     namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
     valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
@@ -273,10 +293,25 @@ div2.addEventListener("click", function () {
   console.log(lumosity);
   console.log(hue);
 
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
+  }
+  // SATURATION
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+  // LUMOSITY
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
   }
 });
 div3.addEventListener("click", function () {
@@ -294,11 +329,25 @@ div3.addEventListener("click", function () {
   console.log(saturation);
   console.log(lumosity);
   console.log(hue);
-
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
+  }
+  // SATURATION
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+  // LUMOSITY
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
   }
 });
 div4.addEventListener("click", function () {
@@ -316,11 +365,25 @@ div4.addEventListener("click", function () {
   console.log(saturation);
   console.log(lumosity);
   console.log(hue);
-
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
+  }
+  // SATURATION
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+  // LUMOSITY
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
   }
 });
 div5.addEventListener("click", function () {
@@ -338,11 +401,25 @@ div5.addEventListener("click", function () {
   console.log(saturation);
   console.log(lumosity);
   console.log(hue);
-
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
+  }
+  // SATURATION
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+  // LUMOSITY
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
   }
 });
 div6.addEventListener("click", function () {
@@ -361,10 +438,29 @@ div6.addEventListener("click", function () {
   console.log(saturation);
   console.log(lumosity);
   console.log(hue);
-
+  // HUE
   for (let i = 0, hue = 0; i < 15; i++) {
     names[i].textContent = HSLToHex(hue, 100, lumosity);
     values[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
     hue += 24;
   }
+  // SATURATION
+  for (let i = 0, saturation = 100; i < 15; i++) {
+    namesSaturation[i].textContent = HSLToHex(hue, saturation, lumosity);
+    valuesSaturation[
+      i
+    ].style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lumosity}%)`;
+    saturation -= 6.6666667;
+  }
+  // LUMOSITY
+  for (let i = 0, lumosity = 100; i < 15; i++) {
+    namesLumosity[i].textContent = HSLToHex(hue, 100, lumosity);
+    valuesLumosity[i].style.backgroundColor = `hsl(${hue}, 100%, ${lumosity}%)`;
+    lumosity -= 6.667;
+  }
 });
+
+// TEST FUNCTION
+
+const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+console.log(HEXtoHSL(randomColor));
