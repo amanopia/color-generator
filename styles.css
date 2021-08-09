@@ -9,7 +9,7 @@ p {
   margin: 0 20px;
 }
 .heading {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .items {
@@ -56,6 +56,7 @@ p {
   font-family: "Montserrat";
   font-weight: 500;
 }
+
 .background {
   background-color: black;
 }
@@ -93,7 +94,7 @@ p {
 }
 .heading {
   position: relative;
-  margin: 0 0 20px 0;
+  margin: 25px 0 20px 0;
 
   font-family: "Montserrat";
   font-weight: 600;
@@ -101,6 +102,8 @@ p {
 .values--container {
   padding-left: 0;
   margin-bottom: 60px;
+
+  transition-duration: 1s;
 }
 
 .values {
